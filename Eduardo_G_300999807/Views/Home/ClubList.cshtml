@@ -10,7 +10,6 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col">#</th>
 				<th scope="col">Name</th>
 				<th scope="col">League</th>
 				<th scope="col">Number of Players</th>
@@ -21,8 +20,7 @@
 		<tbody>
 			@foreach (Eduardo_G_300999807.Models.Club c in @Model)
 			{
-			<tr>
-				<td>@c.ClubId</td>
+			<tr>				
 				<td>@c.Name</td>
 				<td>@c.League</td>
 				<td>@(c.Players != null ? c.Players.Count : 0)</td>

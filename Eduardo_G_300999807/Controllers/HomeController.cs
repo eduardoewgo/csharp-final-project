@@ -26,12 +26,12 @@ namespace Eduardo_G_300999807.Controllers
 
         public IActionResult ClubList()
         {            
-            return View(FetchClubs());
+            return View(clubRepository.Clubs);
         }
 
         public IActionResult ManagePlayers()
         {
-            return View(FetchPlayers());
+            return View(playerRepository.Players);
         }
 
         public IActionResult AssociatePlayer(int playerId)
@@ -48,7 +48,7 @@ namespace Eduardo_G_300999807.Controllers
         {
             Club newClub = clubRepository.GetById(association.ClubId);
             playerRepository.AddToClub(association.Player, newClub);
-            return View("ManagePlayers", FetchPlayers());
+            return View("ManagePlayers", playerRepository.Players);
         }
 
         [HttpGet]
@@ -79,28 +79,6 @@ namespace Eduardo_G_300999807.Controllers
         public ViewResult ClubDetails(int clubId)
         {
             return View(clubRepository.GetById(clubId));
-        }
-
-        public List<Club> FetchClubs()
-        {
-            List<Club> clubs = new List<Club>();
-            foreach (Club c in clubRepository.Clubs)
-            {
-                c.Players = clubRepository.GetPlayersByClubId(c.ClubId).ToList();
-                clubs.Add(c);
-            }
-            return clubs;
-        }
-
-        public List<Player> FetchPlayers()
-        {
-            List<Player> players = new List<Player>();
-            foreach (Player p in playerRepository.Players)
-            {
-                if (p.ClubId != null) p.Club = clubRepository.GetById(p.ClubId);
-                players.Add(p);
-            }
-            return players;
         }
     }
 }

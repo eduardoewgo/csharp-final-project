@@ -6,10 +6,8 @@
 }
 
 <form asp-action="AssociatePlayer" method="post">
-	<div class="form-group">
-		<label for="PlayerId" asp-for="Player.PlayerId">Player Id:</label>
-		<input type="text" class="form-control" id="PlayerId" asp-for="Player.PlayerId">
-	</div>
+	<input type="hidden" name="Player.PlayerId" asp-for="Player.PlayerId" />
+	
 	<div class="form-group">
 		<label for="PlayerName" asp-for="Player.Name">Player Name:</label>
 		<input type="text" class="form-control" id="PlayerName" asp-for="Player.Name">

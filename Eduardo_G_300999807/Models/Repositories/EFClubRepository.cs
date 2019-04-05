@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Eduardo_G_300999807.Models
             context = ctx;
         }
 
-        public IQueryable<Club> Clubs => context.Clubs;
+        public IQueryable<Club> Clubs => context.Clubs.Include(c => c.Players);
 
         public int Delete(int clubId)
         {
@@ -37,7 +38,7 @@ namespace Eduardo_G_300999807.Models
 
         public IEnumerable<Player> GetPlayersByClubId(int clubId)
         {
-            return context.Players.Where(p => p.ClubId == clubId);
+            return context.Players.Where(p => p.Club.ClubId == clubId);
         }
 
         public Club Insert(Club club)

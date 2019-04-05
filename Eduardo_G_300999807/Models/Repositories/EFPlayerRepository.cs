@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Eduardo_G_300999807.Models
             context = ctx;
         }
 
-        public IQueryable<Player> Players => context.Players;
+        public IQueryable<Player> Players => context.Players.Include(p => p.Club);
 
         public Player AddToClub(Player player, Club club)
         {
