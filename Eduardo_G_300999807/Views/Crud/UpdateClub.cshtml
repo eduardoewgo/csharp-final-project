@@ -1,0 +1,18 @@
+﻿@model Eduardo_G_300999807.Models.Club
+
+@{
+	ViewData["Title"] = "UpdateClub";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.isUpdated == true)
+{
+	<div class="alert alert-success" role="alert">
+		Club Updated!
+	</div>
+}
+else
+{
+	@await Html.PartialAsync("~/Views/Shared/_ClubForm.cshtml", Model);
+}
+

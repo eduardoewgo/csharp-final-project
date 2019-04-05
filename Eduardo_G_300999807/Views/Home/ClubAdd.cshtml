@@ -1,0 +1,16 @@
+﻿@model Eduardo_G_300999807.Models.Club
+
+@{
+	ViewData["Title"] = "ClubAdd";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Html.PartialAsync("~/Views/Shared/_ClubForm.cshtml");
+
+@if (Model != null)
+{
+	<div class="alert alert-success" role="alert">
+		Club Added!
+	</div>
+}
+

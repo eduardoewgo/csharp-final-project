@@ -1,0 +1,19 @@
+﻿
+@{
+	ViewData["Title"] = "DeleteClub";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.RecordsDeleted > 0)
+{
+	<div class="alert alert-success" role="alert">
+		Club Deleted.
+	</div>
+}
+else
+{
+	<div class="alert alert-danger" role="alert">
+		Failed. Remove players from the club before deleting.
+	</div>
+}
+

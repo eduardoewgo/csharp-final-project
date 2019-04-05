@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Eduardo_G_300999807.Models.Club>
+
+@{
+	ViewData["Title"] = "ClubList";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (@Model != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Name</th>
+				<th scope="col">League</th>
+				<th scope="col">Number of Players</th>
+				<th scope="col">Detail</th>
+				<th scope="col">Update</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Eduardo_G_300999807.Models.Club c in @Model)
+			{
+			<tr>
+				<td>@c.ClubId</td>
+				<td>@c.Name</td>
+				<td>@c.League</td>
+				<td>@(c.Players != null ? c.Players.Count : 0)</td>
+				<td><a asp-action="ClubDetails" asp-route-clubId="@c.ClubId">detail</a></td>
+				<td><a asp-controller="Crud" asp-action="UpdateClub" asp-route-clubId="@c.ClubId">update</a></td>
+			</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<div class="alert alert-danger" role="alert">
+		Model is empty!
+	</div>
+}
+

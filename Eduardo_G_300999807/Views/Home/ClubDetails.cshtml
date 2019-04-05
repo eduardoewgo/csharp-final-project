@@ -1,0 +1,9 @@
+﻿@model Eduardo_G_300999807.Models.Club
+
+@{
+    ViewData["Title"] = "ClubDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Html.PartialAsync("~/Views/Shared/_ClubDetails.cshtml", @Model);
+

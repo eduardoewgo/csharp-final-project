@@ -1,0 +1,31 @@
+﻿@model Eduardo_G_300999807.Models.Player
+
+@{
+	ViewData["Title"] = "PlayerAdd";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="PlayerAdd" method="post">
+	<div class="form-group">
+		<label for="Name" asp-for="Name">Name:</label>
+		<input type="text" class="form-control" id="Name" placeholder="Player Name" asp-for="Name">
+	</div>
+	<div class="form-group">
+		<label for="Age" asp-for="Age">Age:</label>
+		<input type="text" class="form-control" id="Age" placeholder="Player Age" asp-for="Age">
+	</div>
+	<div class="form-group">
+		<label for="Overall" asp-for="Overall">Overall:</label>
+		<input type="text" class="form-control" id="Overall" placeholder="Player Overall" asp-for="Overall">
+	</div>
+
+	<button type="submit" class="btn btn-primary">Add Player</button>
+	<button asp-action="Index" class="btn btn-dark">Cancel</button>
+</form>
+
+@if (Model != null)
+{
+	<div class="alert alert-success" role="alert">
+		Player Added!
+	</div>
+}

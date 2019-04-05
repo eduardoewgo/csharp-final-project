@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Eduardo_G_300999807.Models.Player>
+
+@{
+	ViewData["Title"] = "ManagePlayers";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (@Model != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Name</th>
+				<th scope="col">Age</th>
+				<th scope="col">Overall</th>
+				<th scope="col">Club</th>
+				<th scope="col">Associate</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Eduardo_G_300999807.Models.Player p in @Model)
+			{
+			<tr>
+				<td>@p.PlayerId</td>
+				<td>@p.Name</td>
+				<td>@p.Age</td>
+				<td>@p.Overall</td>
+				<td>@(p.Club != null ? p.Club.Name : "None")</td>
+				<td><a asp-controller="Home" asp-action="AssociatePlayer" asp-route-playerId="@p.PlayerId">associate</a></td>
+			</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<div class="alert alert-danger" role="alert">
+		Model is empty!
+	</div>
+}

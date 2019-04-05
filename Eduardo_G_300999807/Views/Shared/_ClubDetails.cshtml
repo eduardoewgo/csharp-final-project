@@ -1,0 +1,33 @@
+﻿@model Eduardo_G_300999807.Models.Club
+
+<div class="card">
+	<div class="card-body">
+		<h5 class="card-title">Club Information</h5>
+		<p><span class="form-l">Club Name: </span> @Model.Name</p>
+		<p><span class="form-l">Club League: </span>@Model.League</p>
+		<p><span class="form-l">Squad Size: </span>@(Model.Players != null ? Model.Players.Count : 0)</p>
+
+		<h5>Players</h5>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Name</th>
+					<th scope="col">Age</th>
+					<th scope="col">Overall</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (Eduardo_G_300999807.Models.Player p in @Model.Players)
+				{
+					<tr>
+						<td>@p.PlayerId</td>
+						<td>@p.Name</td>
+						<td>@p.Age</td>
+						<td>@p.Overall</td>						
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
