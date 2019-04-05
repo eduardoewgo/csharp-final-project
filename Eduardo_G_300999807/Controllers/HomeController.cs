@@ -70,10 +70,11 @@ namespace Eduardo_G_300999807.Controllers
         }
 
         [HttpPost]
-        public ViewResult ClubAdd(Club club)
+        public ActionResult ClubAdd(Club club)
         {
-            return View(clubRepository.Insert(club));
-        }        
+            clubRepository.Insert(club);
+            return RedirectToAction("ClubList", "Home");
+        } 
 
         public ViewResult ClubDetails(int clubId)
         {

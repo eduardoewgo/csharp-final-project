@@ -30,11 +30,10 @@ namespace Eduardo_G_300999807.Controllers
         }
 
         [HttpPost]
-        public ViewResult UpdateClub(Club club)
+        public ActionResult UpdateClub(Club club)
         {
             clubRepository.Update(club);
-            ViewBag.isUpdated = true;
-            return View();
+            return RedirectToAction("ClubList", "Home");
         }
 
         public ViewResult DeleteClub(int clubId)
