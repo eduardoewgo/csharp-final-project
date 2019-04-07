@@ -5,8 +5,14 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form asp-controller="Crud" asp-action="UpdateClub" method="post">
+@if (ViewBag.isUpdated == true)
+{
+	<div class="alert alert-success" role="alert">
+		Club Updated!
+	</div>
+}
+else
+{
 	@await Html.PartialAsync("~/Views/Shared/_ClubForm.cshtml", Model);
-	<button type="submit" class="btn btn-primary">Update Club</button>
-	<button asp-controller="Crud" asp-action="DeleteClub" asp-route-clubId="@Model.ClubId" class="btn btn-dark">Delete</button>
-</form>
+}
+

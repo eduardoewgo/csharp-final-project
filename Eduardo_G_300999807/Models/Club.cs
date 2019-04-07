@@ -14,6 +14,10 @@ namespace Eduardo_G_300999807.Models
         public string Name { get; set; }
         public string League { get; set; }
 
-        public List<Player> Players { get; set; }
+        public virtual List<Player> Players { get; set; }
+
+        public Club()
+        {            
+        }
     }
 }

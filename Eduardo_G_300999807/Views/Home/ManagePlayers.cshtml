@@ -10,6 +10,7 @@
 	<table class="table">
 		<thead>
 			<tr>
+				<th scope="col">#</th>
 				<th scope="col">Name</th>
 				<th scope="col">Age</th>
 				<th scope="col">Overall</th>
@@ -21,6 +22,7 @@
 			@foreach (Eduardo_G_300999807.Models.Player p in @Model)
 			{
 			<tr>
+				<td>@p.PlayerId</td>
 				<td>@p.Name</td>
 				<td>@p.Age</td>
 				<td>@p.Overall</td>
