@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eduardo_G_300999807.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Eduardo_G_300999807.Controllers
 {
@@ -18,24 +19,29 @@ namespace Eduardo_G_300999807.Controllers
             playerRepository = playerRepo;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult UpdateClub(int clubId)
         {
             return View(clubRepository.GetById(clubId));
         }
 
         [HttpPost]
-        public ActionResult UpdateClub(Club club)
+        [Authorize]
+        public ViewResult UpdateClub(Club club)
         {
             clubRepository.Update(club);
-            return RedirectToAction("ClubList", "Home");
+            ViewBag.isUpdated = true;
+            return View();
         }
 
+        [Authorize]
         public ViewResult DeleteClub(int clubId)
         {
             ViewBag.RecordsDeleted = clubRepository.Delete(clubId);

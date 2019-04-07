@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eduardo_G_300999807.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eduardo_G_300999807.Controllers
@@ -26,14 +27,16 @@ namespace Eduardo_G_300999807.Controllers
 
         public IActionResult ClubList()
         {            
-            return View(clubRepository.Clubs);
+            return View(FetchClubs());
         }
 
+        [Authorize]
         public IActionResult ManagePlayers()
         {
-            return View(playerRepository.Players);
+            return View(FetchPlayers());
         }
 
+        [Authorize]
         public IActionResult AssociatePlayer(int playerId)
         {
             Player player = playerRepository.GetById(playerId);
@@ -48,10 +51,11 @@ namespace Eduardo_G_300999807.Controllers
         {
             Club newClub = clubRepository.GetById(association.ClubId);
             playerRepository.AddToClub(association.Player, newClub);
-            return View("ManagePlayers", playerRepository.Players);
+            return View("ManagePlayers", FetchPlayers());
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult PlayerAdd()
         {
             return View();
@@ -64,21 +68,44 @@ namespace Eduardo_G_300999807.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult ClubAdd()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ClubAdd(Club club)
+        [Authorize]
+        public ViewResult ClubAdd(Club club)
         {
-            clubRepository.Insert(club);
-            return RedirectToAction("ClubList", "Home");
-        } 
+            return View(clubRepository.Insert(club));
+        }        
 
         public ViewResult ClubDetails(int clubId)
         {
             return View(clubRepository.GetById(clubId));
+        }
+
+        public List<Club> FetchClubs()
+        {
+            List<Club> clubs = new List<Club>();
+            foreach (Club c in clubRepository.Clubs)
+            {
+                c.Players = clubRepository.GetPlayersByClubId(c.ClubId).ToList();
+                clubs.Add(c);
+            }
+            return clubs;
+        }
+
+        public List<Player> FetchPlayers()
+        {
+            List<Player> players = new List<Player>();
+            foreach (Player p in playerRepository.Players)
+            {
+                if (p.ClubId != null) p.Club = clubRepository.GetById(p.ClubId);
+                players.Add(p);
+            }
+            return players;
         }
     }
 }

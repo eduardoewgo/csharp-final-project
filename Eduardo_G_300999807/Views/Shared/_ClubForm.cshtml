@@ -1,17 +1,46 @@
 ﻿@model Eduardo_G_300999807.Models.Club
 
-<input type="hidden" name="ClubID" asp-for="ClubId" />
-
-<div class="form-group">
-	<label for="Name" asp-for="Name">Name:</label>
-	<input type="text" class="form-control" id="Name" placeholder="Club Name" asp-for="Name">
-</div>
-<div class="form-group">
-	<label for="League" asp-for="League">League</label>
-	<select class="form-control" id="League" asp-for="League">
-		<option value="ESP1">ESP1</option>
-		<option value="ENG1">ENG1</option>
-		<option value="GER1">GER1</option>
-		<option value="ITA1">ITA1</option>
-	</select>
-</div>
+@if (Model == null || Model.ClubId == 0)
+{
+	<form asp-action="ClubAdd" method="post">
+		<div class="form-group">
+			<label for="Name" asp-for="Name">Name:</label>
+			<input type="text" class="form-control" id="Name" placeholder="Club Name" asp-for="Name">
+		</div>
+		<div class="form-group">
+			<label for="League" asp-for="League">League</label>
+			<select class="form-control" id="League" asp-for="League">
+				<option value="ESP1">ESP1</option>
+				<option value="ENG1">ENG1</option>
+				<option value="GER1">GER1</option>
+				<option value="ITA1">ITA1</option>
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Add Club</button>
+		<button asp-action="Index" class="btn btn-dark">Cancel</button>
+	</form>
+}
+else
+{
+	<form asp-controller="Crud" asp-action="UpdateClub" method="post">
+		<div class="form-group">
+			<label for="ClubId" asp-for="ClubId">Id:</label>
+			<input type="text" class="form-control" id="ClubId" asp-for="ClubId">
+		</div>
+		<div class="form-group">
+			<label for="Name" asp-for="Name">Name:</label>
+			<input type="text" class="form-control" id="Name" placeholder="Club Name" asp-for="Name">
+		</div>
+		<div class="form-group">
+			<label for="League" asp-for="League">League</label>
+			<select class="form-control" id="League" asp-for="League">
+				<option value="ESP1">ESP1</option>
+				<option value="ENG1">ENG1</option>
+				<option value="GER1">GER1</option>
+				<option value="ITA1">ITA1</option>
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Update Club</button>
+		<button asp-controller="Crud" asp-action="DeleteClub" asp-route-clubId="@Model.ClubId" class="btn btn-dark">Delete</button>
+	</form>
+}
