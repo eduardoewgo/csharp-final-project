@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Eduardo_G_300999807.Controllers
 {
-    [Authorize(Roles = "Admins")]
+    [Authorize]
     public class AccountController : Controller
     {
         private UserManager<IdentityUser> userManager;
@@ -51,6 +51,7 @@ namespace Eduardo_G_300999807.Controllers
             ModelState.AddModelError("", "Invalid name or password");
             return View(loginModel);
         }
+
         public async Task<RedirectResult> Logout(string returnUrl = "/")
         {
             await signInManager.SignOutAsync();

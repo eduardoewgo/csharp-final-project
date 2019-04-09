@@ -36,6 +36,7 @@ namespace Eduardo_G_300999807.Controllers
             return View(playerRepository.Players);
         }
 
+        [Authorize]
         public IActionResult AssociatePlayer(int playerId)
         {
             Player player = playerRepository.GetById(playerId);
@@ -83,7 +84,7 @@ namespace Eduardo_G_300999807.Controllers
             return RedirectToAction("ClubList", "Home");
         }
 
-        [Authorize]
+        
         public ViewResult ClubDetails(int clubId)
         {
             return View(clubRepository.GetById(clubId));
