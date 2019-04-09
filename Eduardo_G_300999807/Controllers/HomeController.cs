@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eduardo_G_300999807.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eduardo_G_300999807.Controllers
@@ -29,6 +30,7 @@ namespace Eduardo_G_300999807.Controllers
             return View(clubRepository.Clubs);
         }
 
+        [Authorize]
         public IActionResult ManagePlayers()
         {
             return View(playerRepository.Players);
@@ -44,6 +46,7 @@ namespace Eduardo_G_300999807.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AssociatePlayer(AssociationViewModel association)
         {
             Club newClub = clubRepository.GetById(association.ClubId);
@@ -52,30 +55,35 @@ namespace Eduardo_G_300999807.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult PlayerAdd()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public ViewResult PlayerAdd(Player player)
         {
             return View(playerRepository.Insert(player));
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult ClubAdd()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult ClubAdd(Club club)
         {
             clubRepository.Insert(club);
             return RedirectToAction("ClubList", "Home");
-        } 
+        }
 
+        [Authorize]
         public ViewResult ClubDetails(int clubId)
         {
             return View(clubRepository.GetById(clubId));

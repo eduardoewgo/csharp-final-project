@@ -6,7 +6,7 @@
 }
 
 <form asp-action="ClubAdd" method="post">
-	@await Html.PartialAsync("~/Views/Shared/_ClubForm.cshtml");
+	@await Html.PartialAsync("~/Views/Shared/_ClubForm.cshtml")
 	<button type="submit" class="btn btn-primary">Add Club</button>
 	<button asp-action="Index" class="btn btn-dark">Cancel</button>
 </form>
