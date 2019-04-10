@@ -38,11 +38,12 @@
         <ul class="nav navbar-nav navbar-right">
             @if (User.Identity.IsAuthenticated)
             {
-                <li>
-                    <button type="button" class="btn btn-danger" onclick="@("window.location.href='" + @Url.Action("Logout", "Account") + "'");">Log out</button>
-                </li>
-            }
-        </ul>
+                <span class="badge badge-pill badge-dark">User: @User.Identity.Name</span>
+    <li>
+        <button type="button" class="btn btn-danger" onclick="@("window.location.href='" + @Url.Action("Logout", "Account") + "'");">Log out</button>
+    </li>
+    }
+</ul>
     </nav>
 	<div class="container m-3">
 		@RenderBody()
