@@ -57,5 +57,10 @@ namespace Eduardo_G_300999807.Controllers
             await signInManager.SignOutAsync();
             return Redirect(returnUrl);
         }
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

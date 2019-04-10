@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Eduardo_G_300999807.Controllers
 {
-    [Authorize]
     public class CrudController : Controller
     {
         private IClubRepository clubRepository;
@@ -19,18 +18,18 @@ namespace Eduardo_G_300999807.Controllers
             clubRepository = clubRepo;
             playerRepository = playerRepo;
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ViewResult UpdateClub(int clubId)
         {
             return View(clubRepository.GetById(clubId));
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult UpdateClub(Club club)
         {
@@ -38,7 +37,7 @@ namespace Eduardo_G_300999807.Controllers
             return RedirectToAction("ClubList", "Home");
         }
 
-        
+        [Authorize(Roles = "Admin")]
         public ViewResult DeleteClub(int clubId)
         {
             ViewBag.RecordsDeleted = clubRepository.Delete(clubId);
