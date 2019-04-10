@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eduardo_G_300999807.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eduardo_G_300999807.Controllers
 {
+    [Authorize]
     public class CrudController : Controller
     {
         private IClubRepository clubRepository;
@@ -36,6 +38,7 @@ namespace Eduardo_G_300999807.Controllers
             return RedirectToAction("ClubList", "Home");
         }
 
+        
         public ViewResult DeleteClub(int clubId)
         {
             ViewBag.RecordsDeleted = clubRepository.Delete(clubId);
