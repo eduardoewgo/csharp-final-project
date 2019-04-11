@@ -15,11 +15,11 @@ namespace Eduardo_G_300999807.Models
         }
 
         public IQueryable<Player> Players => context.Players
-                                            .Include(p => p.Club)
-                                            .Include(p => p.TransferLog)
-                                                .ThenInclude(t => t.FromClub)
-                                            .Include(p => p.TransferLog)
-                                                .ThenInclude(t => t.ToClub);
+            .Include(p => p.Club)
+            .Include(p => p.TransferLog)
+            .ThenInclude(t => t.FromClub)
+            .Include(p => p.TransferLog)
+            .ThenInclude(t => t.ToClub);
 
         public Player AddToClub(Player player, Club club)
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eduardo_G_300999807.Models;
+using Eduardo_G_300999807.Models.Interfaces;
+using Eduardo_G_300999807.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +32,7 @@ namespace Eduardo_G_300999807
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             services.AddTransient<IClubRepository, EFClubRepository>();
             services.AddTransient<IPlayerRepository, EFPlayerRepository>();
+            services.AddTransient<IFixtureRepository, EFFixtureRepository>();
             services.AddMvc();
         }
 
