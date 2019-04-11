@@ -14,8 +14,7 @@ namespace Eduardo_G_300999807.Controllers
     {
         private UserManager<IdentityUser> userManager;
         private SignInManager<IdentityUser> signInManager;
-        public AccountController(UserManager<IdentityUser> userMgr,
-        SignInManager<IdentityUser> signInMgr)
+        public AccountController(UserManager<IdentityUser> userMgr, SignInManager<IdentityUser> signInMgr)
         {
             userManager = userMgr;
             signInManager = signInMgr;
@@ -24,10 +23,7 @@ namespace Eduardo_G_300999807.Controllers
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
-            return View(new LoginModel
-            {
-                ReturnUrl = returnUrl
-            });
+            return View(new LoginModel { ReturnUrl = returnUrl });
         }
         [HttpPost]
         [AllowAnonymous]
@@ -36,13 +32,11 @@ namespace Eduardo_G_300999807.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user =
-                await userManager.FindByNameAsync(loginModel.Name);
+                IdentityUser user = await userManager.FindByNameAsync(loginModel.Name);
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
-                    if ((await signInManager.PasswordSignInAsync(user,
-                    loginModel.Password, false, false)).Succeeded)
+                    if ((await signInManager.PasswordSignInAsync(user, loginModel.Password, false, false)).Succeeded)
                     {
                         return Redirect(loginModel?.ReturnUrl ?? "");
                     }
