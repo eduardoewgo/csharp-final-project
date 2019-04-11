@@ -46,6 +46,12 @@ namespace Eduardo_G_300999807.Controllers
             AssociationViewModel associationViewModel = new AssociationViewModel(clubs, player);
             return View(associationViewModel);
         }
+        [Authorize(Roles = "Admin")]
+        public IActionResult TransferLog(int playerId)
+        {
+            Player player = playerRepository.GetById(playerId);
+            return View(player);
+        }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]

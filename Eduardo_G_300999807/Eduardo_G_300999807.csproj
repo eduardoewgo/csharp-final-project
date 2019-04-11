@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190411010541_TransferLog.cs" />
+    <Compile Remove="Migrations\20190411010541_TransferLog.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".bowerrc" />
   </ItemGroup>
 
