@@ -16,5 +16,6 @@ namespace Eduardo_G_300999807.Models
         public int Overall { get; set; }
         
         public Club Club { get; set; }
+        public List<TransferLog> TransferLog { get; set; }
     }    
 }
