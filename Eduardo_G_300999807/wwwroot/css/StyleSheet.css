@@ -4,3 +4,8 @@
 .form-l {
 	color: darkgray;
 }
+
+.bottom-btn {
+	position: absolute;
+	bottom: 0;
+}

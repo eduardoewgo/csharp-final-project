@@ -1,0 +1,67 @@
+﻿@model Eduardo_G_300999807.Models.FixtureListViewModel
+
+@{
+	ViewData["Title"] = "FixtureList";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (@Model != null)
+{
+	<div style="margin-bottom: 10px">
+		<form asp-action="FixtureList" method="post">
+			<div class="row">
+				<div class="col-3">
+					<label for="Init" asp-for="Init">Init:</label>
+					<input type="text" class="form-control" id="Init" asp-for="Init">
+				</div>
+				<div class="col-3">
+					<label for="End" asp-for="End">End:</label>
+					<input type="text" class="form-control" id="End" asp-for="End">
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-primary bottom-btn">Filter</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Home Team</th>
+				<th scope="col">Away Team</th>
+				<th scope="col">Home Score</th>
+				<th scope="col">Away Score</th>
+				<th scope="col">Match Time</th>
+				<th scope="col">Set Results</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Eduardo_G_300999807.Models.Fixture f in @Model.Fixtures)
+			{
+				<tr>
+					<td>@f.Home.Name</td>
+					<td>@f.Away.Name</td>
+					<td>@f.HomeScore</td>
+					<td>@f.AwayScore</td>
+					<td>@f.MatchTime</td>
+					@if (f.MatchTime < DateTime.Now)
+					{
+						<td><a asp-controller="Home" asp-action="FixtureSetScore" asp-route-fixtureId="@f.FixtureId">set score</a></td>
+					}
+					else
+					{
+						<td>waiting for match</td>
+					}
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<div class="alert alert-danger" role="alert">
+		Model is empty!
+	</div>
+}
+

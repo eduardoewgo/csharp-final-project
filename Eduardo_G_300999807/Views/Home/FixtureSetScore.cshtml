@@ -1,0 +1,31 @@
+﻿@model Eduardo_G_300999807.Models.Fixture
+
+@{
+	ViewData["Title"] = "FixtureSetScore";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="FixtureSetScore" method="post">
+	<input type="hidden" name="FixtureId" asp-for="FixtureId" />
+
+	<div class="form-group">
+		@Html.Label("HomeScore", "Home Score:")
+		@Html.TextBox("HomeScore", null, new { @class = "form-control" })
+	</div>
+	<div class="form-group">
+		@Html.Label("AwayScore", "Away Score:")
+		@Html.TextBox("AwayScore", null, new { @class = "form-control" })
+	</div>
+
+	<button type="submit" class="btn btn-primary">Set</button>
+	<button asp-action="Index" class="btn btn-dark">Cancel</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+	<div class="alert alert-danger" role="alert">
+		@ViewBag.Error
+		Hey
+	</div>
+}
+

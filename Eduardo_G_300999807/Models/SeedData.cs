@@ -37,6 +37,24 @@ namespace Eduardo_G_300999807.Models
                     new Player() { Name = "James Rodriguez", Age = 27, Overall = 88 }
                     );
             }
+            
+            context.SaveChanges();
+
+            // Wait for clubs to be saved.
+            if (!context.Fixtures.Any())
+            {
+                Club c1 = context.Clubs.FirstOrDefault(c => c.ClubId == 1);
+                Club c2 = context.Clubs.FirstOrDefault(c => c.ClubId == 2);
+
+                if (c1 != null && c2 != null)
+                {
+                    context.Fixtures.AddRange(
+                        new Fixture() { Home = c1, Away = c2, MatchTime = DateTime.Now.AddMinutes(2) },
+                        new Fixture() { Home = c2, Away = c1, MatchTime = DateTime.Today.AddDays(5) }
+                        );
+                }                
+            }
+
             context.SaveChanges();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eduardo_G_300999807.Models;
+using Eduardo_G_300999807.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +14,13 @@ namespace Eduardo_G_300999807.Controllers
         // Not sure if we should have multiples controllers at this point.
         private IClubRepository clubRepository;
         private IPlayerRepository playerRepository;
+        private IFixtureRepository fixtureRepository;
 
-        public HomeController(IClubRepository clubRepo, IPlayerRepository playerRepo)
+        public HomeController(IClubRepository clubRepo, IPlayerRepository playerRepo, IFixtureRepository fixtureRepo)
         {
             clubRepository = clubRepo;
             playerRepository = playerRepo;
+            fixtureRepository = fixtureRepo;
         }
 
         [AllowAnonymous]
@@ -27,7 +30,7 @@ namespace Eduardo_G_300999807.Controllers
         }
         [AllowAnonymous]
         public IActionResult ClubList()
-        {            
+        {
             return View(clubRepository.Clubs);
         }
 
@@ -126,6 +129,60 @@ namespace Eduardo_G_300999807.Controllers
         public ViewResult ClubDetails(int clubId)
         {
             return View(clubRepository.GetById(clubId));
+        }
+
+        [AllowAnonymous]
+        public ViewResult FixtureList()
+        {
+            return View(new FixtureListViewModel() { Fixtures = fixtureRepository.Fixtures, Init = DateTime.Now, End = DateTime.Now.AddDays(7) });
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ViewResult FixtureList(FixtureListViewModel fixtureListViewModel)
+        {
+            fixtureListViewModel.Fixtures = fixtureRepository.GetByDate(fixtureListViewModel.Init, fixtureListViewModel.End);
+            return View(fixtureListViewModel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ViewResult FixtureAdd()
+        {
+            return View(new FixtureAddViewModel() { Clubs = clubRepository.Clubs, Fixture = new Fixture() { MatchTime = DateTime.Now } });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult FixtureAdd(FixtureAddViewModel fixtureAddViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                fixtureAddViewModel.Fixture.Home = clubRepository.GetById(fixtureAddViewModel.HomeClubId);
+                fixtureAddViewModel.Fixture.Away = clubRepository.GetById(fixtureAddViewModel.AwayClubId);
+                fixtureRepository.Insert(fixtureAddViewModel.Fixture);
+                return RedirectToAction("FixtureList", "Home");
+            }
+            else
+            {
+                // Not sure how can I pass this to the get method.
+                ViewBag.Error = "Invalid values. Match not saved.";
+                return RedirectToAction("FixtureAdd", "Home");
+            }
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ViewResult FixtureSetScore(int fixtureId)
+        {
+            return View(fixtureRepository.GetById(fixtureId));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult FixtureSetScore(Fixture fixture)
+        {
+            fixtureRepository.SetScore(fixture);
+            return RedirectToAction("FixtureList", "Home");
         }
     }
 }
