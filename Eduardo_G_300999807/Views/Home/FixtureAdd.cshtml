@@ -14,7 +14,8 @@
 		@Html.DropDownList("AwayClubId", new SelectList(Model.Clubs, "ClubId", "Name"), new { @class = "form-control" })
 	</div>
 	<div class="form-group">
-		@Html.TextBoxFor(model => model.Fixture.MatchTime, new { @type = "date", @class = "form-control datepicker", @Value = Model.Fixture.MatchTime.ToString("yyyy-MM-dd") })
+		<label for="MatchTime" asp-for="Fixture.MatchTime">MatchTime:</label>
+		<input type="text" class="form-control" id="MatchTime" asp-for="Fixture.MatchTime">
 	</div>
 
 	<button type="submit" class="btn btn-primary">Create</button>

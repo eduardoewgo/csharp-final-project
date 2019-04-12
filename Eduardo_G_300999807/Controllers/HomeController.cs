@@ -30,7 +30,7 @@ namespace Eduardo_G_300999807.Controllers
         }
         [AllowAnonymous]
         public IActionResult ClubList()
-        {            
+        {
             return View(clubRepository.Clubs);
         }
 
@@ -103,7 +103,15 @@ namespace Eduardo_G_300999807.Controllers
         [AllowAnonymous]
         public ViewResult FixtureList()
         {
-            return View(fixtureRepository.Fixtures);
+            return View(new FixtureListViewModel() { Fixtures = fixtureRepository.Fixtures, Init = DateTime.Now, End = DateTime.Now.AddDays(7) });
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ViewResult FixtureList(FixtureListViewModel fixtureListViewModel)
+        {
+            fixtureListViewModel.Fixtures = fixtureRepository.GetByDate(fixtureListViewModel.Init, fixtureListViewModel.End);
+            return View(fixtureListViewModel);
         }
 
         [Authorize(Roles = "Admin")]
@@ -122,13 +130,14 @@ namespace Eduardo_G_300999807.Controllers
                 fixtureAddViewModel.Fixture.Away = clubRepository.GetById(fixtureAddViewModel.AwayClubId);
                 fixtureRepository.Insert(fixtureAddViewModel.Fixture);
                 return RedirectToAction("FixtureList", "Home");
-            } else
+            }
+            else
             {
                 // Not sure how can I pass this to the get method.
                 ViewBag.Error = "Invalid values. Match not saved.";
                 return RedirectToAction("FixtureAdd", "Home");
             }
-            
+
         }
 
         [Authorize(Roles = "Admin")]
