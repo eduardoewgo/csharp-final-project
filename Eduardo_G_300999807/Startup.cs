@@ -25,8 +25,10 @@ namespace Eduardo_G_300999807
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionString:IdentityConnection"]));
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SOCCER_MANAGER;Trusted_Connection=True;MultipleActiveResultSets=true"));
+            //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionString:IdentityConnection"]));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Identity;Trusted_Connection=True;MultipleActiveResultSets=true"));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             services.AddTransient<IClubRepository, EFClubRepository>();
             services.AddTransient<IPlayerRepository, EFPlayerRepository>();

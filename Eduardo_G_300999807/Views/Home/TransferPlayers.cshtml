@@ -1,0 +1,61 @@
+﻿@model TransferPlayersViewModel
+@{
+    ViewData["Title"] = "Player's Transfer Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (@Model != null)
+{
+    <h4>Filter:</h4>
+    <form asp-action="TransferPlayers" method="post">
+        <div class="row">
+            <div class="col">
+                <label for="Name" asp-for="Name">Name:</label>
+                <input type="text" class="form-control" id="Name" placeholder="Player Name" asp-for="Name">
+            </div>
+            <div class="col">
+                <label for="Name" asp-for="ClubFrom">From:</label>
+                <input type="text" class="form-control" id="ClubFrom" placeholder="From" asp-for="ClubFrom">
+            </div>
+            <div class="col">
+                <label for="Name" asp-for="ClubTo">To:</label>
+                <input type="text" class="form-control" id="ClubTo" placeholder="To" asp-for="ClubTo">
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Date Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Player player in @Model.Players)
+            {
+                @foreach (TransferLog tl in player.TransferLog)
+                {
+                    <tr>
+                        <td>@player.Name</td>
+                        <td>@(tl.FromClub == null ? "NO TEAM" : tl.FromClub.Name)</td>
+                        <td>@tl.ToClub.Name</td>
+                        <td>@tl.Date.ToString("MM/dd/yyyy HH:mm:ss")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Model is empty!
+    </div>
+}
