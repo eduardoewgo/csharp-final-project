@@ -39,7 +39,38 @@ namespace Eduardo_G_300999807.Controllers
         {
             return View(playerRepository.Players);
         }
-
+        [Authorize(Roles = "Admin")]
+        public IActionResult TransferPlayers()
+        {
+            TransferPlayersViewModel tp = new TransferPlayersViewModel() { Players = playerRepository.Players };
+            return View(tp);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult TransferPlayers(TransferPlayersViewModel model)
+        {
+            TransferPlayersViewModel tp = new TransferPlayersViewModel();
+            tp.Players = playerRepository.Players;
+            if (model.Name != null)
+            {
+                tp.Players = tp.Players.Where(p => p.Name.Contains(model.Name));
+            }
+            if (model.ClubFrom != null)
+            {
+                foreach (var player in tp.Players)
+                {
+                    player.TransferLog.RemoveAll(tl => !tl.FromClub?.Name.Contains(model.ClubFrom) ?? true);
+                }
+            }
+            if (model.ClubTo != null)
+            {
+                foreach (var player in tp.Players)
+                {
+                    player.TransferLog.RemoveAll(tl => !tl.ToClub?.Name.Contains(model.ClubTo) ?? true);
+                }
+            }
+            return View(tp);
+        }
         [Authorize(Roles = "Admin")]
         public IActionResult AssociatePlayer(int playerId)
         {
