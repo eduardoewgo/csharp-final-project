@@ -45,5 +45,15 @@ namespace Eduardo_G_300999807.Models.Repositories
             updatingFixture.AwayScore = fixture.AwayScore;
             context.SaveChanges();
         }
+
+        public bool isValid(Fixture fixture)
+        {
+            bool isHomeValid = context.Fixtures.FirstOrDefault(f => f.Home.ClubId == fixture.Home.ClubId
+            && f.MatchTime.DayOfYear == fixture.MatchTime.DayOfYear) == null ? true : false;
+
+            bool isAwayValid = context.Fixtures.FirstOrDefault(f => f.Away.ClubId == fixture.Away.ClubId
+            && f.MatchTime.DayOfYear == fixture.MatchTime.DayOfYear) == null ? true : false;
+            return (isHomeValid && isAwayValid) ? true : false;
+        }
     }
 }

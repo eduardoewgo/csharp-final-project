@@ -141,7 +141,13 @@ namespace Eduardo_G_300999807.Controllers
         [HttpPost]
         public ViewResult FixtureList(FixtureListViewModel fixtureListViewModel)
         {
-            fixtureListViewModel.Fixtures = fixtureRepository.GetByDate(fixtureListViewModel.Init, fixtureListViewModel.End);
+            if (fixtureListViewModel.End > fixtureListViewModel.Init)
+            {
+                fixtureListViewModel.Fixtures = fixtureRepository.GetByDate(fixtureListViewModel.Init, fixtureListViewModel.End);
+            } else
+            {
+                fixtureListViewModel.Fixtures = fixtureRepository.Fixtures;
+            }
             return View(fixtureListViewModel);
         }
 
@@ -155,12 +161,19 @@ namespace Eduardo_G_300999807.Controllers
         [HttpPost]
         public ActionResult FixtureAdd(FixtureAddViewModel fixtureAddViewModel)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid && fixtureAddViewModel.HomeClubId != fixtureAddViewModel.AwayClubId)
+            {                
                 fixtureAddViewModel.Fixture.Home = clubRepository.GetById(fixtureAddViewModel.HomeClubId);
                 fixtureAddViewModel.Fixture.Away = clubRepository.GetById(fixtureAddViewModel.AwayClubId);
-                fixtureRepository.Insert(fixtureAddViewModel.Fixture);
-                return RedirectToAction("FixtureList", "Home");
+                
+                if (fixtureRepository.isValid(fixtureAddViewModel.Fixture))
+                {
+                    fixtureRepository.Insert(fixtureAddViewModel.Fixture);
+                    return RedirectToAction("FixtureList", "Home");
+                } else
+                {
+                    return RedirectToAction("FixtureAdd", "Home");
+                }                
             }
             else
             {
@@ -168,7 +181,6 @@ namespace Eduardo_G_300999807.Controllers
                 ViewBag.Error = "Invalid values. Match not saved.";
                 return RedirectToAction("FixtureAdd", "Home");
             }
-
         }
 
         [Authorize(Roles = "Admin")]

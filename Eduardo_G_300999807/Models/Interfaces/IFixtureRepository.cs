@@ -12,5 +12,6 @@ namespace Eduardo_G_300999807.Models.Interfaces
         Fixture GetById(int fixtureId);
         IQueryable<Fixture> GetByDate(DateTime dateInit, DateTime dateEnd);
         void SetScore(Fixture fixture);
+        bool isValid(Fixture fixture);
     }
 }
